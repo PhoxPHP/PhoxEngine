@@ -1,0 +1,10 @@
+{
+	"name": "PhoxEngine",
+	"description": "PHP template engine",
+	"keywords": ["php", "php7", "template-engine", "framework", "phoxphp", "phoxphp-framework"],
+	"autoload": {
+		"psr-4": {
+			"Kit\\PhoxEngine\\": "src"
+		}
+	}
+}
