@@ -29,6 +29,7 @@ namespace Kit\PhoxEngine;
 
 use RuntimeException;
 use Kit\PhoxEngine\Compiler;
+use Kit\PhoxEngine\Cache\Cache;
 use Kit\PhoxEngine\Directives\_Extend;
 use Kit\PhoxEngine\Contracts\{RepositoryContract, RendererContract};
 
@@ -62,7 +63,6 @@ class Renderer implements RendererContract
 	{
 		$systemModules = $this->repository->getOpt('system_modules');
 		$view = $this->repository->getViewWithExtension();
-
 		if (gettype($view) !== 'string') {
 			throw new RuntimeException(sprintf('Cannot render any vew. No view provided.'));
 		}
@@ -71,19 +71,60 @@ class Renderer implements RendererContract
 			throw new RuntimeException(sprintf('View {%s} does not exist.', $view));
 		}
 
-		$output = null;
-		
+		$cache = new Cache(
+			$this->repository,
+			$view
+		);
+
+		// Is this view cached? If true, load from cache store.
+		if ($cache->isEnabled() && $cache->isCached()) {
+			return $cache->loadViewFromCache($this->repository->getVariables());
+		}
+
+		$output = [];
 		$extend = new _Extend($this, $this->repository);
-		$output .= $extend->getCompiledMixin();
+		$parsedOutput = $extend->getCompiledMixin();
+		$rpm = [];
 
 		foreach($systemModules as $module) {
 			if ($module !== Kit\PhoxEngine\Directives\_Extend::class) {
 				$module = new $module($this, $this->repository);
-				$output .= $module->getCompiledMixin();
+				$output[] = $module->getCompiledMixin($parsedOutput);
 			}
 		}
 
-		echo $output;
+		foreach($output as $out) {
+			if ($out !== null) {
+				foreach($out as $i => $key) {
+					$rpm[$i] = $key;
+				}
+			}
+		}
+
+		$output = str_replace(
+			array_keys($rpm),
+			array_values($rpm),
+			$parsedOutput
+		);
+
+		if (!function_exists('md5')) {
+			throw new RuntimeException('md5 function is required.');
+		}
+
+		if ($cache->isEnabled()) {
+			$cache->cacheView(
+				$output
+			);
+		}
+
+		$variables = $this->repository->getVariables();
+		foreach(array_keys($variables) as $key) {
+			$value = $variables[$key];
+			$$key = $value;
+		}
+
+		$output = html_entity_decode($output);
+		eval("?> $output <?php ");
 	}
 
 	/**

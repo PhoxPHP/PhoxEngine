@@ -11,12 +11,17 @@ return [
 	####################
 	'extension' => 'php',
 
+	##########################################
+	# If set to true, caching will be enabled.
+	#########################################
+	'enable_caching' => false,
+
 	##############################
 	# Cache configurations
 	##############################
 	'cache' => [
 		// Where cached views will be saved
-		'path' => 'public/cache/',
+		'path' => dirname(__DIR__) . '/cache/',
 
 		// Cache timeout
 		'timeout' => 60
@@ -34,7 +39,13 @@ return [
 	##############################################################################
 	'system_modules' => [
 		//...
-		\Kit\PhoxEngine\Directives\Each::class
+		\Kit\PhoxEngine\Directives\Each::class,
+		\Kit\PhoxEngine\Directives\Setter::class,
+		\Kit\PhoxEngine\Directives\Getter::class,
+		\Kit\PhoxEngine\Directives\_If::class,
+		\Kit\PhoxEngine\Directives\_ElseIf::class,
+		\Kit\PhoxEngine\Directives\Raw::class,
+		\Kit\PhoxEngine\Directives\_Include::class
 	]
 
 ];

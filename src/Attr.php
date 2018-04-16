@@ -45,4 +45,39 @@ abstract class Attr
 	*/
 	const EXTEND_VIEWAS_REGEX = "/\#viewAs\<(\'|\")(.*?)(\'|\")\>(.*?)\#stopView/s";
 
+	/**
+	* Each directive regular expression.
+	*/
+	const EACH_REGEX = "/\#each\<(.*?)\>(.*?)(\#stopEach)/s";
+
+	/**
+	* Setter directive regular expression
+	*/
+	const SETTER_REGEX = "/\#set\<(.*?), (.*?)\>/s";
+
+	/**
+	* Getter echo directive regular expression
+	*/
+	const GETTER_ECHO_REGEX = "/\#\{(.*?)\}/s";
+
+	/**
+	* If directive regular expression
+	*/
+	const IF_REGEX = "/\#if\<(.*?)\>/s";
+
+	/**
+	* If directive regular expression
+	*/
+	const ELSE_IF_REGEX = "/\#elseif\<(.*?)\>/s";
+
+	/**
+	* Raw directive regular expression
+	*/
+	const RAW_REGEX = "/\#php\<(.*?)\>/s";
+
+	/**
+	* Include directive regular expression
+	*/
+	const INCLUDE_REGEX = "/\#include\<(.*?)\>/s";
+
 }

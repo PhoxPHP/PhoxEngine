@@ -73,6 +73,16 @@ interface RepositoryContract
 	public function setExtension(String $extension);
 
 	/**
+	* Sets a view variable.
+	*
+	* @param 	$variableName <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	void
+	*/
+	public function setVariable(String $variableName, $value=null);
+
+	/**
 	* Returns rendered view.
 	*
 	* @access 	public
@@ -95,5 +105,22 @@ interface RepositoryContract
 	* @return 	String
 	*/
 	public function getExtension();
+
+	/**
+	* Returns a view variable.
+	*
+	* @param 	$variableName <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getVariable(String $variableName);
+
+	/**
+	* Returns variables.
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getVariables() : Array;
 
 }

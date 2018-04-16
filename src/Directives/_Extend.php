@@ -77,7 +77,7 @@ class _Extend implements DirectiveContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function getCompiledMixin()
+	public function getCompiledMixin(String $parsed=null)
 	{
 		$data = null;
 
