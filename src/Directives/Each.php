@@ -22,19 +22,21 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Directives\_Extend
+* @package 	Kit\PhoxEngine\Directives\Each
 */
 
 namespace Kit\PhoxEngine\Directives;
 
 use RuntimeException;
+use Kit\PhoxEngine\Attr;
+use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};
 use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
 /*
 * Usage:
-* #each<$users as $user>
+* #each<$users : $user : $index>
 *	{{ data }}
 * #stopEach
 */
@@ -55,6 +57,12 @@ class Each implements DirectiveContract
 	protected 	$repository;
 
 	/**
+	* @var 		$info
+	* @access 	protected
+	*/
+	protected 	$info = [];
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(Renderer $engine, Repository $repository)
@@ -66,14 +74,59 @@ class Each implements DirectiveContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function getCompiledMixin()
+	public function getCompiledMixin(String $parsedOutput=null)
 	{
-		$data = null;
+		$data = [];
+		$directiveTags = $this->getDirectiveTags($parsedOutput);
 
-		$view = $this->repository->getViewWithExtension();
-		$content = file_get_contents($view, true);
+		if (count($directiveTags) > 0) {
+			foreach($directiveTags as $directiveTag) {
+				$dir = $directiveTag['dir'];
+				$content = $directiveTag['dir-content'];
+				$loopArgs = $directiveTag['dir-data'];
+				$loopArgsArray = explode(':', $loopArgs);
 
-		$directiveTags = $this->getDirectiveTags($content);
+				// if arguments are more than 3 which is the maximum,
+				// an exception will be thrown. 
+				if (count($loopArgsArray) > 3) {
+					throw new RuntimeException(sprintf('Number of each directive arguments exceeds 3.'));
+				}
+
+				$valueArg = ($loopArgsArray[1]) ?? "\$value";
+				$keyArg = ($loopArgsArray[2]) ?? "\$key";
+				$valueArg = trim($valueArg);
+				$keyArg = trim($keyArg);
+
+				$varObject = new Variable($this->repository);
+
+				if ($varObject->getVariableType($valueArg) !== 1) {
+					throw new Exception(
+						sprint(
+							'Invalid argument {%s} provided in loop directive.',
+							$valueArg
+						)
+					);
+				}
+
+				if ($varObject->getVariableType($keyArg) !== 1) {
+					throw new Exception(
+						sprint(
+							'Invalid argument {%s} provided in loop directive.',
+							$keyArg
+						)
+					);
+				}
+
+				$initArg = trim($loopArgsArray[0]);
+				$var = new Variable($this->repository, $initArg);
+				$arrayExpressionVar = $var->getParsedVariable();
+				$content = "<?php foreach($arrayExpressionVar as $keyArg => $valueArg): ?>$content<?php endforeach; ?>";
+
+				$data[$dir] = $content;
+			}
+		}
+
+		return $data;
 	}
 
 	/**
@@ -86,6 +139,22 @@ class Each implements DirectiveContract
 	protected function getDirectiveTags(String $data=null) : Array
 	{
 		$directiveTags = [];
+		
+		if (preg_match_all(Attr::EACH_REGEX, $data, $matches)) {
+			for($i = 0; $i < count($matches[0]); $i++) {
+				$directive = $matches[0][$i];
+				$directiveData = $matches[1][$i];
+				$directiveContent = $matches[2][$i];
+				$directiveClosingTag = $matches[3][$i];
+
+				$directiveTags[] = [
+					'dir' => $directive,
+					'dir-data' => $directiveData,
+					'dir-content' => $directiveContent,
+					'dir-closing-tag' => $directiveClosingTag
+				];
+			}
+		}
 
 		return $directiveTags;
 	}

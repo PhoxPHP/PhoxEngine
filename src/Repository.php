@@ -64,6 +64,18 @@ class Repository implements RepositoryContract
 	protected 	$config;
 
 	/**
+	* @var 		$variables
+	* @access 	protected
+	*/
+	protected 	$variables = [];
+
+	/**
+	* @var 		$hiddenVariables
+	* @access 	protected
+	*/
+	protected 	$hiddenVariables = [];
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(Array $options=[])
@@ -100,6 +112,14 @@ class Repository implements RepositoryContract
 
 	/**
 	* {@inheritDoc}
+	*/	
+	public function setVariable(String $variableName, $value=null)
+	{
+		$this->variables[$variableName] = $value;
+	}
+
+	/**
+	* {@inheritDoc}
 	*/
 	public function getView()
 	{
@@ -120,6 +140,58 @@ class Repository implements RepositoryContract
 	public function getExtension()
 	{
 		return $this->options['extension'] ?? null;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getVariable(String $variableName)
+	{
+		return $this->variables[$variableName] ?? false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getVariables() : Array
+	{
+		return $this->variables;
+	}
+
+	/**
+	* Sets a hidden variable.
+	*
+	* @param 	$variableName <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	void
+	*/
+	public function setHiddenVariable(String $variableName, $value=null)
+	{
+		$this->hiddenVariables[$variableName] = $value;
+	}
+
+	/**
+	* Returns a hidden variable.
+	*
+	* @param 	$variableName <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getHiddenVariable(String $variableName)
+	{
+		return $this->hiddenVariables[$variableName] ?? false;
+	}
+
+	/**
+	* Returns an array of hidden variables.
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getHiddenVariables()
+	{
+		return $this->hiddenVariables;
 	}
 
 	/**

@@ -22,34 +22,69 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Directive\Contract\MixinContract
+* @package 	Kit\PhoxEngine\Directives\Getter
 */
 
-namespace Kit\PhoxEngine\Directives\Contract;
+namespace Kit\PhoxEngine\Directives;
 
+use RuntimeException;
+use Kit\PhoxEngine\Attr;
+use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};
+use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
+use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
-interface DirectiveContract
+/*
+* Usage:
+* #php<code>
+*/
+
+class _Include implements DirectiveContract
 {
 
 	/**
-	* Directive constructor. Accepts <Kit\PhoxEngine\Renderer> and <Kit\PhoxEngine\Repository>
-	* as it's arguments. 
-	*
-	* @param 	$engine <Kit\PhoxEngine\Renderer>
-	* @param 	$repository <Kit\PhoxEngine\Repository>
-	* @access 	public
-	* @return 	void
+	* @var 		$engine
+	* @access 	protected
 	*/
-	public function __construct(Renderer $engine, Repository $repository);
+	protected 	$engine;
 
 	/**
-	* Returns the parsed output of a mixin.
-	*
-	* @param 	$parsed <String> Parsed output.
-	* @access 	public
-	* @return 	String
+	* @var 		$repository
+	* @access 	protected
 	*/
-	public function getCompiledMixin(String $parsed=null);
+	protected 	$repository;
 
+	/**
+	* {@inheritDoc}
+	*/
+	public function __construct(Renderer $engine, Repository $repository)
+	{
+		$this->engine = $engine;
+		$this->repository = $repository;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getCompiledMixin(String $parsed=null)
+	{
+		$data = null;
+
+		$view = $this->repository->getViewWithExtension();
+		$content = file_get_contents($view, true);
+		$variable = new Variable($this->repository, null);
+
+		if (preg_match_all(Attr::INCLUDE_REGEX, $content, $matches)) {
+			for($i = 0; $i < count($matches[0]); $i++) {
+
+				$dir = $matches[0][$i];
+				$name = $matches[1][$i];
+
+				// $dir = htmlentities($dir);
+				$data[$dir] = '<?php ' . $name . '; ?>';
+			}
+		}
+
+		return $data;
+	}
 }

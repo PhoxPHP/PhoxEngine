@@ -27,27 +27,130 @@
 
 namespace Kit\PhoxEngine\Cache;
 
+use Kit\PhoxEngine\Contracts\RepositoryContract;
+
 class Cache
 {
 
-	public function __construct()
-	{
+	/**
+	* @var 		$file
+	* @access 	protected
+	*/
+	protected 	$file;
 
+	/**
+	* @var 		$repository
+	* @access 	protected
+	*/
+	protected 	$repository;
+
+	/**
+	* @var 		$viewId
+	* @access 	protected
+	*/
+	protected 	$viewId;
+
+	/**
+	* @var 		$cachePath
+	* @access 	protected
+	*/
+	protected 	$cachePath;
+
+	/**
+	* @var 		$cacheEnabled
+	* @access 	protected
+	*/
+	protected 	$cacheEnabled;
+
+	/**
+	* Cache constructor.
+	*
+	* @param 	$repository <Ki\PhoxEngine\Contracts\RepositoryContract>
+	* @param 	$file <String>
+	* @access 	public
+	* @return 	void
+	*/
+	public function __construct(RepositoryContract $repository, String $file)
+	{
+		$this->repository = $repository;
+		$this->file = $file;
+		$this->viewId = md5($file);
+		$cacheConfig = $this->repository->getOpt('cache');
+		$this->cachePath = $cacheConfig['path'];
+		$this->cacheEnabled = $this->repository->getOpt('enable_caching');
 	}
 
-	public function isCached()
+	/**
+	* Checks if caching is enabled.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isEnabled() : Bool
 	{
+		if ($this->cacheEnabled == true) {
+			return true;
+		}
 
+		return false;
 	}
 
-	public function addToCache()
+	/**
+	* Checks if a view is cached.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isCached() : Bool
 	{
+		$cacheFile = $this->cachePath . $this->viewId . '.cache';
 
+		if (file_exists($cacheFile)) {
+			return true;
+		}
+
+		return false;
 	}
 
-	public function loadFromCache()
+	/**
+	* Caches a view.
+	*
+	* @param 	$content <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function cacheView(String $content)
 	{
+		$cacheFile = $this->cachePath . $this->viewId . '.cache';
 
+		if (file_exists($cacheFile)) {
+			unlink($cacheFile);
+		}
+
+		$fileHandle = fopen($cacheFile, 'w');
+		fwrite($fileHandle, $content);
+		fclose($fileHandle);
+		return true;
+	}
+
+	/**
+	* Loads a view from cache.
+	*
+	* @param 	$variables <Array>
+	* @access 	public
+	* @return 	String
+	*/
+	public function loadViewFromCache(Array $variables=[])
+	{
+		foreach(array_keys($variables) as $key) {
+			$var = $variables[$key];
+			$$key = $var;
+		}
+
+		$cacheFile = $this->cachePath . $this->viewId . '.cache';
+		$output = file_get_contents($cacheFile);
+		$output = html_entity_decode($output);
+		eval("?> $output <?php ");
 	}
 
 }
