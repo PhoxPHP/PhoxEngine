@@ -63,14 +63,21 @@ class Cache
 	protected 	$cacheEnabled;
 
 	/**
+	* @var 		$returnOutput
+	* @access 	protected
+	*/
+	protected 	$returnOutput = false;
+
+	/**
 	* Cache constructor.
 	*
 	* @param 	$repository <Ki\PhoxEngine\Contracts\RepositoryContract>
 	* @param 	$file <String>
+	* @param 	$returnOutput <Boolean>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(RepositoryContract $repository, String $file)
+	public function __construct(RepositoryContract $repository, String $file, Bool $returnOutput=false)
 	{
 		$this->repository = $repository;
 		$this->file = $file;
@@ -78,6 +85,7 @@ class Cache
 		$cacheConfig = $this->repository->getOpt('cache');
 		$this->cachePath = $cacheConfig['path'];
 		$this->cacheEnabled = $this->repository->getOpt('enable_caching');
+		$this->returnOutput = $returnOutput;
 	}
 
 	/**
@@ -150,7 +158,17 @@ class Cache
 		$cacheFile = $this->cachePath . $this->viewId . '.cache';
 		$output = file_get_contents($cacheFile);
 		$output = html_entity_decode($output);
+
+		ob_start();
 		eval("?> $output <?php ");
+		$data = ob_get_contents();
+		ob_end_clean();
+
+		if ($this->returnOutput == true) {
+			return $data;
+		}
+
+		echo $data;
 	}
 
 }

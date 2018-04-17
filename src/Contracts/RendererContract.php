@@ -18,9 +18,12 @@ interface RendererContract
 	/**
 	* Renders data and returns the output.
 	*
+	* @param 	$returnOutput <Boolean> If output should be returned or rendered.
+	* @param 	$view <String> View to be rendered.
+	* @param 	$repository <Object>
 	* @access 	public
 	* @return 	String
 	*/
-	public function render();
+	public function render(Bool $returnOutput=false, String $view=null, RepositoryContract $repository=null);
 
 }

@@ -36,7 +36,7 @@ use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
 /*
 * Usage:
-* #php<code>
+* #include<"template_name">
 */
 
 class _Include implements DirectiveContract
@@ -68,20 +68,31 @@ class _Include implements DirectiveContract
 	*/
 	public function getCompiledMixin(String $parsed=null)
 	{
-		$data = null;
+		$data = [];
 
-		$view = $this->repository->getViewWithExtension();
-		$content = file_get_contents($view, true);
-		$variable = new Variable($this->repository, null);
-
-		if (preg_match_all(Attr::INCLUDE_REGEX, $content, $matches)) {
+		if (preg_match_all(Attr::INCLUDE_REGEX, $parsed, $matches)) {
 			for($i = 0; $i < count($matches[0]); $i++) {
 
 				$dir = $matches[0][$i];
-				$name = $matches[1][$i];
+				$template = str_replace('"', "", $matches[1][$i]);
 
-				// $dir = htmlentities($dir);
-				$data[$dir] = '<?php ' . $name . '; ?>';
+				$repository = new Repository();
+				$repository->setView($template);
+
+				$view = $repository->getViewWithExtension();
+				if (!file_exists($view)) {
+					throw new RuntimeException(
+						sprintf(
+							'File %s does not exist',
+							$view
+						)
+					);
+				}
+
+				$renderer = new Renderer($repository);
+				$output = $renderer->render(true, $view);
+
+				$data[$dir] = $output;
 			}
 		}
 

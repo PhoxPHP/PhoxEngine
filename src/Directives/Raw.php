@@ -70,8 +70,12 @@ class Raw implements DirectiveContract
 	{
 		$data = null;
 
-		$view = $this->repository->getViewWithExtension();
-		$content = file_get_contents($view, true);
+		$content = $parsed;
+		if ($parsed == null) {
+			$view = $this->repository->getViewWithExtension();
+			$content = file_get_contents($view, true);
+		}
+
 		$variable = new Variable($this->repository, null);
 
 		if (preg_match_all(Attr::RAW_REGEX, $content, $matches)) {
