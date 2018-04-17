@@ -59,10 +59,17 @@ class Renderer implements RendererContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function render()
+	public function render(Bool $returnOutput=false, String $view=null, RepositoryContract $repository=null)
 	{
-		$systemModules = $this->repository->getOpt('system_modules');
-		$view = $this->repository->getViewWithExtension();
+		if ($repository == null) {
+			$repository = $this->repository;
+		}
+
+		$systemModules = $repository->getOpt('system_modules');
+		if ($view == null) {
+			$view = $repository->getViewWithExtension();
+		}
+
 		if (gettype($view) !== 'string') {
 			throw new RuntimeException(sprintf('Cannot render any vew. No view provided.'));
 		}
@@ -72,27 +79,26 @@ class Renderer implements RendererContract
 		}
 
 		$cache = new Cache(
-			$this->repository,
-			$view
+			$repository,
+			$view,
+			$returnOutput
 		);
 
 		// Is this view cached? If true, load from cache store.
 		if ($cache->isEnabled() && $cache->isCached()) {
-			return $cache->loadViewFromCache($this->repository->getVariables());
+			return $cache->loadViewFromCache($repository->getVariables());
 		}
 
 		$output = [];
-		$extend = new _Extend($this, $this->repository);
-		$parsedOutput = $extend->getCompiledMixin();
+		$extend = new _Extend($this, $repository);
+		$parsedOutput = file_get_contents($view);
 		$rpm = [];
 
 		foreach($systemModules as $module) {
-			if ($module !== Kit\PhoxEngine\Directives\_Extend::class) {
-				$module = new $module($this, $this->repository);
-				$output[] = $module->getCompiledMixin($parsedOutput);
-			}
+			$module = new $module($this, $repository);
+			$output[] = $module->getCompiledMixin($parsedOutput);
 		}
-
+		
 		foreach($output as $out) {
 			if ($out !== null) {
 				foreach($out as $i => $key) {
@@ -117,14 +123,24 @@ class Renderer implements RendererContract
 			);
 		}
 
-		$variables = $this->repository->getVariables();
+		$variables = $repository->getVariables();
 		foreach(array_keys($variables) as $key) {
 			$value = $variables[$key];
 			$$key = $value;
 		}
 
 		$output = html_entity_decode($output);
+
+		ob_start();
 		eval("?> $output <?php ");
+		$data = ob_get_contents();
+		ob_end_clean();
+
+		if ($returnOutput == true) {
+			return $data;
+		}
+
+		echo $data;
 	}
 
 	/**

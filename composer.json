@@ -1,7 +1,13 @@
 {
-	"name": "PhoxEngine",
+	"name": "phoxphp/phoxengine",
 	"description": "PHP template engine",
 	"keywords": ["php", "php7", "template-engine", "framework", "phoxphp", "phoxphp-framework"],
+	"author": [
+		{
+			"name": "Peter Taiwo",
+			"email": "taiwop3@gmail.com"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"Kit\\PhoxEngine\\": "src"

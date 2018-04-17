@@ -22,7 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Directives\If
+* @package 	Kit\PhoxEngine\Directives\Cookie
 */
 
 namespace Kit\PhoxEngine\Directives;
@@ -35,14 +35,11 @@ use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
 /*
-* When a view extends another view, set directives must be placed inside the
-* #viewAs tags. 
-*
 * Usage:
-* #set<name, "phoxengine">
+* #cookie<"cookie_name">
 */
 
-class _If implements DirectiveContract
+class Cookie implements DirectiveContract
 {
 
 	/**
@@ -81,16 +78,16 @@ class _If implements DirectiveContract
 
 		$variable = new Variable($this->repository, null);
 
-		if (preg_match_all(Attr::IF_REGEX, $content, $matches)) {
+		if (preg_match_all(Attr::COOKIE_REGEX, $content, $matches)) {
 			for($i = 0; $i < count($matches[0]); $i++) {
-				$dir = $matches[0][$i];
-				$expression = $matches[1][$i];
 
-				$data[$dir] = '<?php if (' . $expression . '): ?>';
+				$dir = $matches[0][$i];
+				$name = trim($matches[1][$i]);
+
+				$data[$dir] = '<?php echo $_COOKIE[' . $name . ']; ?>';
 			}
 		}
 
-		$data['#stopIf'] = '<?php endif; ?>';
 		return $data;
 	}
 }

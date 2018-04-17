@@ -27,11 +27,11 @@ return [
 		'timeout' => 60
 	],
 
-	################################
+	####################################################################
 	# Should php syntax be allowed in template engine? Set this to false
 	# if you do not want to allow php syntax.
-	################################
-	'allow_language_syntax' => true,
+	####################################################################
+	'allow_default_syntax' => true,
 
 	##############################################################################
 	# Allowed system modules. If you do not want a module's mixin to be available
@@ -45,7 +45,8 @@ return [
 		\Kit\PhoxEngine\Directives\_If::class,
 		\Kit\PhoxEngine\Directives\_ElseIf::class,
 		\Kit\PhoxEngine\Directives\Raw::class,
-		\Kit\PhoxEngine\Directives\_Include::class
+		\Kit\PhoxEngine\Directives\Cookie::class,
+		\Kit\PhoxEngine\Directives\_Include::class,
 	]
 
 ];
