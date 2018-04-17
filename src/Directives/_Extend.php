@@ -82,7 +82,7 @@ class _Extend implements DirectiveContract
 		$data = null;
 
 		$view = $this->repository->getViewWithExtension();
-		$content = file_get_contents($view, true);
+		$content = file_get_contents($view);
 
 		ExtendHelper::attach($view);
 		$getQueuedData = ExtendHelper::getQueuedData();

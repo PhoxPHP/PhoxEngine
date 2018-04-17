@@ -91,14 +91,7 @@ class Renderer implements RendererContract
 
 		$output = [];
 		$extend = new _Extend($this, $repository);
-		$parsedOutput = null;
-
-		if ($returnOutput !== true) {
-			$parsedOutput = $extend->getCompiledMixin();
-		}else{
-			$parsedOutput = file_get_contents($view);
-		}
-
+		$parsedOutput = file_get_contents($view);
 		$rpm = [];
 
 		foreach($systemModules as $module) {

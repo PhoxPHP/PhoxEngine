@@ -80,4 +80,9 @@ abstract class Attr
 	*/
 	const INCLUDE_REGEX = "/\#include\<(.*?)\>/s";
 
+	/**
+	* Cookie directive regular expression
+	*/
+	const COOKIE_REGEX = "/\#cookie\<(.*?)\>/s";
+
 }

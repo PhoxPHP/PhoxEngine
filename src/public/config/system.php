@@ -45,6 +45,7 @@ return [
 		\Kit\PhoxEngine\Directives\_If::class,
 		\Kit\PhoxEngine\Directives\_ElseIf::class,
 		\Kit\PhoxEngine\Directives\Raw::class,
+		\Kit\PhoxEngine\Directives\Cookie::class,
 		\Kit\PhoxEngine\Directives\_Include::class,
 	]
 
