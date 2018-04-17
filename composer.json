@@ -1,5 +1,5 @@
 {
-	"name": "PhoxEngine",
+	"name": "phoxphp/phoxengine",
 	"description": "PHP template engine",
 	"keywords": ["php", "php7", "template-engine", "framework", "phoxphp", "phoxphp-framework"],
 	"author": [
