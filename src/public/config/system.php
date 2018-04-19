@@ -43,6 +43,7 @@ return [
 		\Kit\PhoxEngine\Directives\Setter::class,
 		\Kit\PhoxEngine\Directives\Getter::class,
 		\Kit\PhoxEngine\Directives\_If::class,
+		\Kit\PhoxEngine\Directives\_Else::class,
 		\Kit\PhoxEngine\Directives\_ElseIf::class,
 		\Kit\PhoxEngine\Directives\Raw::class,
 		\Kit\PhoxEngine\Directives\Cookie::class,

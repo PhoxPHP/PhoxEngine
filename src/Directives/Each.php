@@ -93,7 +93,7 @@ class Each implements DirectiveContract
 				}
 
 				$valueArg = ($loopArgsArray[1]) ?? "\$value";
-				$keyArg = ($loopArgsArray[2]) ?? "\$key";
+				$keyArg = ($loopArgsArray[2]) ?? "\$index";
 				$valueArg = trim($valueArg);
 				$keyArg = trim($keyArg);
 
