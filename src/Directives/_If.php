@@ -39,7 +39,10 @@ use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 * #viewAs tags. 
 *
 * Usage:
-* #set<name, "phoxengine">
+* -----------------------
+* #if<$results>
+*	do this...
+* #stopIf
 */
 
 class _If implements DirectiveContract
@@ -90,7 +93,10 @@ class _If implements DirectiveContract
 			}
 		}
 
-		$data['#stopIf'] = '<?php endif; ?>';
+		if ($data !== null) {
+			$data['#stopIf'] = '<?php endif; ?>';
+		}
+		
 		return $data;
 	}
 }

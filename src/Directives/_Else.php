@@ -22,7 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Directives\If
+* @package 	Kit\PhoxEngine\Directives\_Else
 */
 
 namespace Kit\PhoxEngine\Directives;
@@ -39,11 +39,11 @@ use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 * #viewAs tags. 
 *
 * Usage:
-* --------------
-* #elseif<true>
+* -----------------------
+* #else
 */
 
-class _ElseIf implements DirectiveContract
+class _Else implements DirectiveContract
 {
 
 	/**
@@ -82,15 +82,14 @@ class _ElseIf implements DirectiveContract
 
 		$variable = new Variable($this->repository, null);
 
-		if (preg_match_all(Attr::ELSE_IF_REGEX, $content, $matches)) {
+		if (preg_match_all(Attr::ELSE_REGEX, $content, $matches)) {
 			for($i = 0; $i < count($matches[0]); $i++) {
 				$dir = $matches[0][$i];
-				$expression = $matches[1][$i];
 
-				$data[$dir] = '<?php elseif (' . $expression . '): ?>';
+				$data[$dir] = '<?php else: ?>';
 			}
 		}
-
+		
 		return $data;
 	}
 }
