@@ -64,15 +64,12 @@ To render a view, you need to use the \Kit\PhoxEngine\Renderer. The constructor 
 #### Working with inheritance in templates.
 
 ##### In child view:
-<!--  parent view declaration  -->
-#parent<"layout">
-<!--  parent view declaration  -->
+    
+    #parent<"layout">  
 
-<!--  blocks -->
-#viewAs<"block_name">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content goes in here..
-#stopView
-<!--  blocks -->
+    #viewAs<"block_name">  
+        content goes in here..  
+    #stopView  
 
 ##### In parent view:
 
