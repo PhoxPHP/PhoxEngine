@@ -4,9 +4,9 @@
 
 ### Requirements:
 
-**i.** PHP 7.0.6 or higher\s\s
-**ii.** Apache/Nginx Server\s\s
-**iii.** md5 function\s\s
+**i.** PHP 7.0.6 or higher  
+**ii.** Apache/Nginx Server                                                     
+**iii.** md5 function  
 
 
 ### Installing PhoxEngine
