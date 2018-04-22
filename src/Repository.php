@@ -161,11 +161,17 @@ class Repository implements RepositoryContract
 	/**
 	* Renders a view.
 	*
+	* @param 	$view <String>
 	* @access 	public
 	* @return 	void
 	*/
-	public function render()
+	public function render(String $view=null)
 	{
+		// If $view parameter is not null, we will set this as the view to be rendered.
+		if ($view !== null) {
+			$this->setView($view);
+		}
+
 		$renderer = new Renderer($this);
 		return $renderer->render();
 	}
