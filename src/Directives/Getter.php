@@ -101,13 +101,13 @@ class Getter implements DirectiveContract
 				if (!isset($argsArray[1])) {
 					// If variable exists, add dollar sign to variable.
 					$data[$dir] = ($this->repository->getHiddenVariable($name))
-					? htmlentities('<?php echo $' . $name . '; ?>')
-					: htmlentities('<?php echo ' . $name . '; ?>');
+					? '<?php echo $' . $name . '; ?>'
+					: '<?php echo ' . $name . '; ?>';
 				}else{
 					if (trim($argsArray[1]) == 'true') {
 						$data[$dir] = ($this->repository->getHiddenVariable($name))
-						? htmlentities('<?php var_dump($' . $argsArray[0] . '); ?>')
-						: htmlentities('<?php var_dump(' . $argsArray[0] . '); ?>');
+						? '<?php var_dump($' . $argsArray[0] . '); ?>'
+						: '<?php var_dump(' . $argsArray[0] . '); ?>';
 					}else{
 						$data[$dir] = '';
 					}
