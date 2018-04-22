@@ -215,7 +215,7 @@ class Repository implements RepositoryContract
 	*/
 	public function getViewPath() : String
 	{
-		return __DIR__ . '/' . $this->getPath() . '/' . $this->getView();
+		return $this->getPath() . '/' . $this->getView();
 	}
 
 	/**
@@ -226,7 +226,7 @@ class Repository implements RepositoryContract
 	*/
 	public function getViewWithExtension() : String
 	{
-		return __DIR__ . '/' . $this->getPath() . '/' . $this->getView() . '.' . $this->getExtension();
+		return $this->getPath() . '/' . $this->getView() . '.' . $this->getExtension();
 	}
 
 	/**
