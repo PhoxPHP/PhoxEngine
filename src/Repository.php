@@ -159,6 +159,18 @@ class Repository implements RepositoryContract
 	}
 
 	/**
+	* Renders a view.
+	*
+	* @access 	public
+	* @return 	void
+	*/
+	public function render()
+	{
+		$renderer = new Renderer($this);
+		return $renderer->render();
+	}
+
+	/**
 	* Sets a hidden variable.
 	*
 	* @param 	$variableName <String>
