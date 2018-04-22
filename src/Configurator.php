@@ -27,7 +27,7 @@
 
 namespace Kit\PhoxEngine;
 
-class Configurator implements ConfiguratorInterface
+class Configurator
 {
 
 	/**
