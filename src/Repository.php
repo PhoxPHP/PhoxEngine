@@ -113,9 +113,10 @@ class Repository implements RepositoryContract
 	/**
 	* {@inheritDoc}
 	*/	
-	public function setVariable(String $variableName, $value=null)
+	public function setVariable(String $variableName, $value=null) : RepositoryContract
 	{
 		$this->variables[$variableName] = $value;
+		return $this;
 	}
 
 	/**
