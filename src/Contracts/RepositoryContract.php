@@ -78,9 +78,9 @@ interface RepositoryContract
 	* @param 	$variableName <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	Object <Kit\PhoxEngine\Contracts\RepositoryContract>
 	*/
-	public function setVariable(String $variableName, $value=null);
+	public function setVariable(String $variableName, $value=null) : RepositoryContract;
 
 	/**
 	* Returns rendered view.

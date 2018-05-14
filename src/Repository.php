@@ -113,9 +113,10 @@ class Repository implements RepositoryContract
 	/**
 	* {@inheritDoc}
 	*/	
-	public function setVariable(String $variableName, $value=null)
+	public function setVariable(String $variableName, $value=null) : RepositoryContract
 	{
 		$this->variables[$variableName] = $value;
+		return $this;
 	}
 
 	/**
@@ -161,11 +162,17 @@ class Repository implements RepositoryContract
 	/**
 	* Renders a view.
 	*
+	* @param 	$view <String>
 	* @access 	public
 	* @return 	void
 	*/
-	public function render()
+	public function render(String $view=null)
 	{
+		// If $view parameter is not null, we will set this as the view to be rendered.
+		if ($view !== null) {
+			$this->setView($view);
+		}
+
 		$renderer = new Renderer($this);
 		return $renderer->render();
 	}
@@ -215,7 +222,7 @@ class Repository implements RepositoryContract
 	*/
 	public function getViewPath() : String
 	{
-		return __DIR__ . '/' . $this->getPath() . '/' . $this->getView();
+		return $this->getPath() . '/' . $this->getView();
 	}
 
 	/**
@@ -226,7 +233,7 @@ class Repository implements RepositoryContract
 	*/
 	public function getViewWithExtension() : String
 	{
-		return __DIR__ . '/' . $this->getPath() . '/' . $this->getView() . '.' . $this->getExtension();
+		return $this->getPath() . '/' . $this->getView() . '.' . $this->getExtension();
 	}
 
 	/**
