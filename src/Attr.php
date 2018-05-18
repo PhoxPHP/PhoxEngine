@@ -63,7 +63,7 @@ abstract class Attr
 	/**
 	* If directive regular expression
 	*/
-	const IF_REGEX = "/\#if\<(.*?)\>/s";
+	const IF_REGEX = "/\#if\<(.*)\>/";
 
 	/**
 	* Else directive regular expression
@@ -73,7 +73,7 @@ abstract class Attr
 	/**
 	* If directive regular expression
 	*/
-	const ELSE_IF_REGEX = "/\#elseif\<(.*?)\>/s";
+	const ELSE_IF_REGEX = "/\#elseif\<(.*?)\>/";
 
 	/**
 	* Raw directive regular expression
