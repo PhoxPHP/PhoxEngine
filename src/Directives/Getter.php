@@ -37,7 +37,7 @@ use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 /*
 * Usage:
 * #{name} - Is equivalent to php's echo
-* #{name : true} - Is equivalent to php's var_dump
+* #{'string' | }
 */
 
 class Getter implements DirectiveContract
@@ -84,18 +84,10 @@ class Getter implements DirectiveContract
 
 				$dir = $matches[0][$i];
 				$name = $matches[1][$i];
-				$argsArray = explode(':', $name);
+				$argsArray = explode('|', $name);
 
 				if (count($argsArray) < 1 || $name == null) {
 					throw new RuntimeException('get directive expects at least one argument.');
-				}
-
-				if ($variable->getVariableType($name) == 1) {
-					// throw new RuntimeException('You may not initialize a variable using $ sign.');
-				}
-
-				if (count($argsArray) > 2) {
-					throw new RuntimeException('Maximum number of arguments exceeded in get directive.');
 				}
 
 				if (!isset($argsArray[1])) {
@@ -104,13 +96,20 @@ class Getter implements DirectiveContract
 					? '<?php echo $' . $name . '; ?>'
 					: '<?php echo ' . $name . '; ?>';
 				}else{
-					if (trim($argsArray[1]) == 'true') {
-						$data[$dir] = ($this->repository->getHiddenVariable($name))
-						? '<?php var_dump($' . $argsArray[0] . '); ?>'
-						: '<?php var_dump(' . $argsArray[0] . '); ?>';
-					}else{
-						$data[$dir] = '';
+
+					$methodName = trim($argsArray[1]);
+					$arguments = [];
+
+					// Remove filter method name index from $argsArray
+					array_splice($argsArray, 1, 1);
+
+					foreach($argsArray as $argument) {
+						$arguments[] = trim($argument);
 					}
+
+					$arguments = implode(',', $arguments);
+					$content = '<?php echo $__repo->' . $methodName . '(' . $arguments . '); ?>';
+					$data[$dir] = $content;
 				}
 			}
 		}
