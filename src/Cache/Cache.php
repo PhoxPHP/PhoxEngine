@@ -159,6 +159,9 @@ class Cache
 		$output = file_get_contents($cacheFile);
 		$output = html_entity_decode($output);
 
+		$__repoClass = $this->repository->getOpt('filterRepository');
+		$__repo = new $__repoClass();
+
 		ob_start();
 		eval("?> $output <?php ");
 		$data = ob_get_contents();

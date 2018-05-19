@@ -4,7 +4,7 @@ return [
 	#############################
 	# Base template path
 	#############################
-	'path' => '/public/templates',
+	'path' => dirname(__DIR__) . '/templates',
 
 	####################
 	# Template extension
@@ -48,6 +48,11 @@ return [
 		\Kit\PhoxEngine\Directives\Raw::class,
 		\Kit\PhoxEngine\Directives\Cookie::class,
 		\Kit\PhoxEngine\Directives\_Include::class,
-	]
+	],
+
+	#########################
+	# filter repository class
+	#########################
+	'filterRepository' => \Kit\PhoxEngine\Directives\Filter\Repository::class
 
 ];

@@ -32,6 +32,7 @@ use Kit\PhoxEngine\Compiler;
 use Kit\PhoxEngine\Cache\Cache;
 use Kit\PhoxEngine\Directives\_Extend;
 use Kit\PhoxEngine\Contracts\{RepositoryContract, RendererContract};
+use Kit\PhoxEngine\Directives\Filter\Repository as FiltersRepository;
 
 class Renderer implements RendererContract
 {
@@ -136,6 +137,8 @@ class Renderer implements RendererContract
 		}
 
 		$output = html_entity_decode($output);
+		$__repoClass = $repository->getOpt('filterRepository');
+		$__repo = new $__repoClass();
 
 		ob_start();
 		eval("?> $output <?php ");
