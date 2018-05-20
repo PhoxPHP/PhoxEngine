@@ -17,21 +17,9 @@ return [
 	'enable_caching' => false,
 
 	##############################
-	# Cache configurations
+	# Cache directory
 	##############################
-	'cache' => [
-		// Where cached views will be saved
-		'path' => dirname(__DIR__) . '/cache/',
-
-		// Cache timeout
-		'timeout' => 60
-	],
-
-	####################################################################
-	# Should php syntax be allowed in template engine? Set this to false
-	# if you do not want to allow php syntax.
-	####################################################################
-	'allow_default_syntax' => true,
+	'cache_dir' => dirname(__DIR__) . '/cache/',
 
 	##############################################################################
 	# Allowed system modules. If you do not want a module's mixin to be available
