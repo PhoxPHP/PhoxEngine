@@ -82,8 +82,7 @@ class Cache
 		$this->repository = $repository;
 		$this->file = $file;
 		$this->viewId = md5($file);
-		$cacheConfig = $this->repository->getOpt('cache');
-		$this->cachePath = $cacheConfig['path'];
+		$this->cachePath = $this->repository->getOpt('cache_dir');
 		$this->cacheEnabled = $this->repository->getOpt('enable_caching');
 		$this->returnOutput = $returnOutput;
 	}
