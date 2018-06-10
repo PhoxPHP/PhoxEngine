@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\PhoxEngine\Contracts\RepositoryContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Contracts\RepositoryContract
 */
 
 namespace Kit\PhoxEngine\Contracts;
@@ -40,7 +35,7 @@ interface RepositoryContract
 	*
 	* @param 	$options <Array>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(Array $options=[]);
 
@@ -50,7 +45,7 @@ interface RepositoryContract
 	*
 	* @param 	$view <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function setView(String $view);
 
@@ -59,7 +54,7 @@ interface RepositoryContract
 	*
 	* @param 	$path <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function setPath(String $path);
 
@@ -68,7 +63,7 @@ interface RepositoryContract
 	*
 	* @param 	$extension <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function setExtension(String $extension);
 
@@ -78,7 +73,7 @@ interface RepositoryContract
 	* @param 	$variableName <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Object <Kit\PhoxEngine\Contracts\RepositoryContract>
+	* @return 	<Object> <Kit\PhoxEngine\Contracts\RepositoryContract>
 	*/
 	public function setVariable(String $variableName, $value=null) : RepositoryContract;
 
@@ -86,7 +81,7 @@ interface RepositoryContract
 	* Returns rendered view.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getView();
 
@@ -94,7 +89,7 @@ interface RepositoryContract
 	* Returns template path.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getPath();
 
@@ -102,7 +97,7 @@ interface RepositoryContract
 	* Returns template extension.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getExtension();
 
@@ -111,15 +106,15 @@ interface RepositoryContract
 	*
 	* @param 	$variableName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getVariable(String $variableName);
 
 	/**
-	* Returns variables.
+	* Returns view variables.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getVariables() : Array;
 
