@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\PhoxEngine\Repository
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\PhoxEngine\Repository
 */
 
 namespace Kit\PhoxEngine;
@@ -164,7 +159,7 @@ class Repository implements RepositoryContract
 	*
 	* @param 	$view <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function render(String $view=null)
 	{
@@ -183,7 +178,7 @@ class Repository implements RepositoryContract
 	* @param 	$variableName <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function setHiddenVariable(String $variableName, $value=null)
 	{
@@ -195,7 +190,7 @@ class Repository implements RepositoryContract
 	*
 	* @param 	$variableName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getHiddenVariable(String $variableName)
 	{
@@ -206,7 +201,7 @@ class Repository implements RepositoryContract
 	* Returns an array of hidden variables.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getHiddenVariables()
 	{
@@ -218,7 +213,7 @@ class Repository implements RepositoryContract
 	*
 	* @param 	$view <String>
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getViewPath() : String
 	{
@@ -229,7 +224,7 @@ class Repository implements RepositoryContract
 	* Returns path to a view with it's extension.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getViewWithExtension() : String
 	{
@@ -241,7 +236,7 @@ class Repository implements RepositoryContract
 	*
 	* @param 	$option <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getOpt(String $option=null)
 	{
@@ -250,7 +245,7 @@ class Repository implements RepositoryContract
 
 	/**
 	* @access 	public
-	* @return 	Object
+	* @return 	<Object> <Kit\PhoxEngine\Repository>
 	* @static
 	*/
 	public static function getInstance()
