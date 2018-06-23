@@ -22,7 +22,7 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
+use InvalidArgumentException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};
@@ -82,7 +82,7 @@ class Getter implements DirectiveContract
 				$argsArray = explode('|', $name);
 
 				if (count($argsArray) < 1 || $name == null) {
-					throw new RuntimeException('get directive expects at least one argument.');
+					throw new InvalidArgumentException('get directive expects at least one argument.');
 				}
 
 				if (!isset($argsArray[1])) {

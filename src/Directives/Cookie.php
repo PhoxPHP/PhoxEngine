@@ -22,7 +22,6 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};

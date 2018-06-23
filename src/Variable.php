@@ -22,8 +22,8 @@
 
 namespace Kit\PhoxEngine;
 
-use RuntimeException;
 use Kit\PhoxEngine\Contracts\RepositoryContract;
+use Kit\PhoxEngine\Exceptions\VariableNotFoundException;
 
 class Variable
 {
@@ -65,7 +65,7 @@ class Variable
 		$variableType = $this->getVariableType($this->variable);
 
 		if ($variableType == 1 && !$this->repository->getVariable(str_replace("\$", '', $this->variable))) {
-			throw new RuntimeException(sprintf('Variable %s does not exist.', $this->variable));
+			throw new VariableNotFoundException(sprintf('Variable %s does not exist.', $this->variable));
 		}
 
 		return $this->variable;

@@ -22,9 +22,9 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\{Renderer, Repository};
+use Kit\PhoxEngine\Exceptions\TagNotFoundException;
 use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
@@ -134,7 +134,12 @@ class _Extend implements DirectiveContract
 				// an exception will be returned as all keys present in the child view must also be
 				// in the parent view.
 				if (!isset($child[$key])) {
-					throw new RuntimeException(sprintf('Parent tag %s does not exist.', $key));
+					throw new TagNotFoundException(
+						sprintf(
+							'Parent tag %s does not exist.',
+							$key
+						)
+					);
 				}
 
 				// Queue output to be replaced
