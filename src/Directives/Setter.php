@@ -22,12 +22,12 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};
 use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
+use Kit\PhoxEngine\Exceptions\BadVariableInitializationException;
 
 /*
 * When a view extends another view, set directives must be placed inside the
@@ -67,8 +67,8 @@ class Setter implements DirectiveContract
 	public function getCompiledMixin(String $parsed=null)
 	{
 		$data = null;
-
 		$content = $parsed;
+
 		if ($parsed == null) {
 			$view = $this->repository->getViewWithExtension();
 			$content = file_get_contents($view, true);
@@ -83,7 +83,7 @@ class Setter implements DirectiveContract
 				$value = $matches[2][$i];
 
 				if ($variable->getVariableType($name) == 1) {
-					throw new RuntimeException('You may not initialize a variable using $ sign.');
+					throw new BadVariableInitializationException('You may not initialize a variable using $ sign.');
 				}
 
 				$dir = "#set<$name, $value>";

@@ -22,10 +22,11 @@
 
 namespace Kit\PhoxEngine;
 
-use RuntimeException;
 use Kit\PhoxEngine\Compiler;
 use Kit\PhoxEngine\Cache\Cache;
 use Kit\PhoxEngine\Directives\_Extend;
+use Kit\PhoxEngine\Exceptions\ViewNotFoundException;
+use KitP\PhoxEngine\Exceptions\RequiredFunctionNotFoundException;
 use Kit\PhoxEngine\Contracts\{RepositoryContract, RendererContract};
 use Kit\PhoxEngine\Directives\Filter\Repository as FiltersRepository;
 
@@ -67,11 +68,11 @@ class Renderer implements RendererContract
 		}
 
 		if (gettype($view) !== 'string') {
-			throw new RuntimeException(sprintf('Cannot render any vew. No view provided.'));
+			throw new ViewNotFoundException(sprintf('Cannot render any vew. No view provided.'));
 		}
 
 		if (!file_exists($view)) {
-			throw new RuntimeException(sprintf('View {%s} does not exist.', $view));
+			throw new ViewNotFoundException(sprintf('View {%s} does not exist.', $view));
 		}
 
 		$cache = new Cache(
@@ -116,7 +117,7 @@ class Renderer implements RendererContract
 		);
 
 		if (!function_exists('md5')) {
-			throw new RuntimeException('md5 function is required.');
+			throw new RequiredFunctionNotFoundException('md5 function is required.');
 		}
 
 		if ($cache->isEnabled()) {

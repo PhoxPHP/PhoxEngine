@@ -22,9 +22,9 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\Variable;
+use InvalidArgumentException;
 use Kit\PhoxEngine\{Renderer, Repository};
 use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
@@ -84,7 +84,7 @@ class Each implements DirectiveContract
 				// if arguments are more than 3 which is the maximum,
 				// an exception will be thrown. 
 				if (count($loopArgsArray) > 3) {
-					throw new RuntimeException(sprintf('Number of each directive arguments exceeds 3.'));
+					throw new InvalidArgumentException(sprintf('Number of each directive arguments exceeds 3.'));
 				}
 
 				$valueArg = ($loopArgsArray[1]) ?? "\$value";
@@ -95,7 +95,7 @@ class Each implements DirectiveContract
 				$varObject = new Variable($this->repository);
 
 				if ($varObject->getVariableType($valueArg) !== 1) {
-					throw new Exception(
+					throw new InvalidArgumentException(
 						sprint(
 							'Invalid argument {%s} provided in loop directive.',
 							$valueArg
@@ -104,7 +104,7 @@ class Each implements DirectiveContract
 				}
 
 				if ($varObject->getVariableType($keyArg) !== 1) {
-					throw new Exception(
+					throw new InvalidArgumentException(
 						sprint(
 							'Invalid argument {%s} provided in loop directive.',
 							$keyArg

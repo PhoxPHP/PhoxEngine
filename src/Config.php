@@ -23,8 +23,8 @@
 namespace Kit\PhoxEngine;
 
 use ReflectionClass;
-use RuntimeException;
 use Kit\PhoxEngine\Repository;
+use Kit\PhoxEngine\Exceptions\InvalidConfigurationFileException;
 
 class Config
 {
@@ -35,13 +35,18 @@ class Config
 	* @param 	$key <String>
 	* @access 	public
 	* @return 	<Mixed>
-	* @throws 	RuntimeException
+	* @throws 	InvalidConfigurationFileException
 	*/
 	public function get(String $key=null)
 	{
 		$configPath = dirname(__DIR__) . '/src/public/config/system.php';
 		if (!file_exists($configPath)) {
-			throw new RuntimeException(sprintf('Unable to load configuration file in {%s}', $configPath));
+			throw new InvalidConfigurationFileException(
+				sprintf(
+					'Unable to load configuration file in [%s]',
+					$configPath
+				)
+			);
 		}
 
 		$config = include $configPath;

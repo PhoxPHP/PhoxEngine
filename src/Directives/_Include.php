@@ -22,11 +22,11 @@
 
 namespace Kit\PhoxEngine\Directives;
 
-use RuntimeException;
 use Kit\PhoxEngine\Attr;
 use Kit\PhoxEngine\Variable;
 use Kit\PhoxEngine\{Renderer, Repository};
 use Kit\PhoxEngine\Directives\Helpers\ExtendHelper;
+use Kit\PhoxEngine\Exceptions\FileNotFoundException;
 use Kit\PhoxEngine\Directives\Contract\DirectiveContract;
 
 /*
@@ -76,7 +76,7 @@ class _Include implements DirectiveContract
 
 				$view = $repository->getViewWithExtension();
 				if (!file_exists($view)) {
-					throw new RuntimeException(
+					throw new FileNotFoundException(
 						sprintf(
 							'File %s does not exist',
 							$view
