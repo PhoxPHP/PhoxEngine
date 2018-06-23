@@ -63,12 +63,12 @@ abstract class Attr
 	/**
 	* Else directive regular expression
 	*/
-	const ELSE_REGEX = "/\#else/s";
+	const ELSE_REGEX = "/\#else/";
 
 	/**
 	* If directive regular expression
 	*/
-	const ELSE_IF_REGEX = "/\#elseif\<(.+)\>/s";
+	const ELSE_IF_REGEX = "/\#elseif\<(.+)\>/";
 
 	/**
 	* Raw directive regular expression
